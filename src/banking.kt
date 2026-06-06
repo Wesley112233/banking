@@ -180,7 +180,7 @@ fun main() {
             }
 
         } else if (response == 7) {
-            flag = false
+            flag = true
         }
     }
 
