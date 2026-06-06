@@ -1,3 +1,80 @@
+fun registerAccountName() :String {
+    // ask for account name and return the string value
+    println("Register Account Name")
+    print("Account Name: ")
+    return readln()
+}
+
+fun depositAccount(accountName: String, balance: Double): Double {
+    // ask for deposit amount
+    println("Deposit Amount")
+    println("Account Name: $accountName")
+    println("Current Balance: $balance")
+    println("Currency: PHP")
+
+    print("Deposit Amount: ")
+
+    val deposit = readln().toDouble()
+    val updatedBalance = balance + deposit
+
+    println("Updated Balance: $updatedBalance")
+
+    return updatedBalance
+}
+
+fun withdrawAccount(accountName: String, balance: Double): Double {
+    println("Withdraw Amount")
+    println("Account Name: $accountName")
+    println("Current Balance: $balance")
+    println("Currency: PHP")
+
+    print("Withdraw Amount: ")
+
+    val withdraw = readln().toDouble()
+    val updatedBalance = balance - withdraw
+
+    println("Updated Balance: $updatedBalance")
+
+    return updatedBalance
+}
+
+fun showExchangeRate() {
+    println("Record Exhcange Rate")
+    println("[1] Philippine Peso (PHP)")
+    println("[2] United States Dollar (USD)")
+    println("[3] Japanese Yen (JPY)")
+    println("[4] British Pound Sterling (GBP)")
+    println("[5] Euro (EUR)")
+    println("[6] Chinese Yuan Renminni (CNY)")
+
+    print("Seclect Foreign Currency: ")
+    val currencyChoice = readln().toInt()
+
+    println("Exchange Rate: ${
+        when (currencyChoice) {
+            1 -> 1.00
+            2 -> 52.00
+            3 -> 0.35
+            4 -> 67.50
+            5 -> 58.20
+            6 -> 7.20
+            else -> 0.0
+        }
+    }")
+}
+
+fun backToMainMenu(): Boolean {
+    // return true if yes and false if no
+    print("\nBack to the Main Menu (Y/N): ")
+    val answer = readln().uppercase()
+    if (answer == "Y") {
+        println("")
+        return true
+    }
+    println("Exiting program...")
+    return false
+}
+
 fun main() {
     var balance: Double = 1000.00
     var interestBalance = 0.00
@@ -27,91 +104,35 @@ fun main() {
         val response = readln().toInt()
 
         if (response == 1) {
-            println("Register Account Name")
-            print("Account Name: ")
-            name = readln()
+            name = registerAccountName()
 
-            print("Back to the Main Menu (Y/N): ")
-            answer = readln().uppercase()
-            if (answer == "Y") {
-                continue
-            } else if (answer == "N") {
-                println("Exiting program...")
-                break
+            if (!backToMainMenu()) {
+                break;
             }
 
         } else if (response == 2) {
-            println("Deposit Amount")
-            println("Account Name: $name")
-            println("Current Balance: $balance")
-            println("Currency: PHP")
 
-            println("Deposit Amount: ")
-            deposit = readln().toInt()
+            balance = depositAccount(name, balance)
 
-            balance += deposit
-            println("Updated Balance: $balance")
-            print("Back to the Main Menu (Y/N): ")
-            answer = readln().uppercase()
-            if (answer == "Y") {
-                continue
-            } else if (answer == "N") {
-                println("Exiting program...")
-                break
+            if (!backToMainMenu()) {
+                break;
             }
 
         } else if (response == 3) {
-            println("Withdraw Amount")
-            println("Account Name: $name")
-            println("Current Balance: $balance")
-            println("Currency: PHP")
 
-            print("Withdraw Amount: ")
-            withdraw = readln().toInt()
+            balance = withdrawAccount(name, balance)
 
-            balance += withdraw
-            println("Updated Balance: $balance")
-            print("Back to the Main Menu (Y/N): ")
-            answer = readln().uppercase()
-            if (answer == "Y") {
-                continue
-            } else if (answer == "N") {
-                println("Exiting program...")
-                break
+            if (!backToMainMenu()) {
+                break;
             }
 
         } else if (response == 4) {
-            println("Record Exhcange Rate")
-            println("[1] Philippine Peso (PHP)")
-            println("[2] United States Dollar (USD)")
-            println("[3] Japanese Yen (JPY)")
-            println("[4] British Pound Sterling (GBP)")
-            println("[5] Euro (EUR)")
-            println("[6] Chinese Yuan Renminni (CNY)")
 
-            print("Seclect Foreign Currency: ")
-            currencyChoice = readln().toInt()
+            showExchangeRate()
 
-            println("Exchange Rate: ${
-                when (currencyChoice) {
-                    1 -> 1.00
-                    2 -> 52.00
-                    3 -> 0.35
-                    4 -> 67.50
-                    5 -> 58.20
-                    6 -> 7.20
-                    else -> 0.0
-                }
-            }")
-
-            answer = readln().uppercase()
-            if (answer == "Y") {
-                continue
-            } else if (answer == "N") {
-                println("Exiting program...")
-                break
+            if (!backToMainMenu()) {
+                break;
             }
-
 
         } else if (response == 5) {
             println("Foreign Currency Exhcange")
