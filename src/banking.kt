@@ -7,33 +7,33 @@ fun registerAccountName() :String {
 
 fun depositAccount(accountName: String, balance: Double): Double {
     // ask for deposit amount
-    println("Deposit Amount")
-    println("Account Name: $accountName")
-    println("Current Balance: $balance")
-    println("Currency: PHP")
+    println("\nDeposit Amount")
+    println("Account Name: ₱$accountName")
+    println("Current Balance: ₱$balance")
+    println("Currency: PHP\n")
 
     print("Deposit Amount: ")
 
     val deposit = readln().toDouble()
     val updatedBalance = balance + deposit
 
-    println("Updated Balance: $updatedBalance")
+    println("Updated Balance: ₱$updatedBalance")
 
     return updatedBalance
 }
 
 fun withdrawAccount(accountName: String, balance: Double): Double {
-    println("Withdraw Amount")
-    println("Account Name: $accountName")
-    println("Current Balance: $balance")
-    println("Currency: PHP")
+    println("\nWithdraw Amount")
+    println("Account Name: ₱$accountName")
+    println("Current Balance: ₱$balance")
+    println("Currency: PHP\n")
 
     print("Withdraw Amount: ")
 
     val withdraw = readln().toDouble()
     val updatedBalance = balance - withdraw
 
-    println("Updated Balance: $updatedBalance")
+    println("Updated Balance: ₱$updatedBalance")
 
     return updatedBalance
 }
@@ -53,14 +53,96 @@ fun showExchangeRate() {
     println("Exchange Rate: ${
         when (currencyChoice) {
             1 -> 1.00
-            2 -> 52.00
-            3 -> 0.35
-            4 -> 67.50
-            5 -> 58.20
-            6 -> 7.20
+            2 -> 60.85
+            3 -> 0.38
+            4 -> 81.55
+            5 -> 70.38
+            6 -> 8.98
             else -> 0.0
         }
     }")
+}
+
+fun currencyExchange() {
+    var flag = true
+
+    while (flag) {
+
+        val rates = mapOf(
+            1 to 1.00,
+            2 to 60.85,
+            3 to 0.38,
+            4 to 81.55,
+            5 to 70.38,
+            6 to 8.98,
+        )
+
+        println("Foreign Currency Exchange (June 12 rate)")
+        println("Source Currency Option:")
+        println("[1] Philippine Peso (PHP)")
+        println("[2] United States Dollar (USD)")
+        println("[3] Japanese Yen (JPY)")
+        println("[4] British Pound Sterling (GBP)")
+        println("[5] Euro (EUR)")
+        println("[6] Chinese Yuan Renminni (CNY)\n")
+
+        print("Source Currency: ")
+        val choice1 = readln().toInt()
+
+        print("Source Amount: ")
+        val amount1 = readln().toFloat()
+
+        println("\nExchange Currency Options:")
+        println("[1] Philippine Peso (PHP)")
+        println("[2] United States Dollar (USD)")
+        println("[3] Japanese Yen (JPY)")
+        println("[4] British Pound Sterling (GBP)")
+        println("[5] Euro (EUR)")
+        println("[6] Chinese Yuan Renminni (CNY)\n")
+
+        print("Source Currency: ")
+
+        val choice2 = readln().toInt()
+        val phpAmount = amount1 * rates[choice1]!!
+        val exchangedAmount = phpAmount / rates[choice2]!!
+
+        println("Exchange Amount: %.2f".format(exchangedAmount))
+
+        print("Convert another currency (Y/N)? ")
+        val answer = readln().uppercase()
+        if (answer == "N") {
+            println("")
+            flag = false
+        }
+
+    }
+}
+
+fun interestAmount(accountName: String, balance: Double) {
+    val annualInterest = 0.05f
+
+    println("Show Interest Amount")
+    println("Account Name: $accountName")
+    println("Current Balance: ₱$balance")
+    println("Currency: PHP")
+    println("Interest Rate: 5%\n")
+
+    print("Total Number of Days: ")
+    val days = readln().toInt()
+
+    var interestBalance = balance
+    println("\nDay   | Interest   | Balance")
+    println("----------------------------")
+    for (day in 1..days) {
+        val dailyInterest = interestBalance * (annualInterest / 365)
+        interestBalance += dailyInterest
+
+        println(
+            "%-5d | %-10.2f | %-10.2f"
+                .format(day, dailyInterest, interestBalance)
+        )
+    }
+
 }
 
 fun backToMainMenu(): Boolean {
@@ -91,7 +173,7 @@ fun main() {
 
     while (flag) {
 
-        println("Select Transactions")
+        println("Select Transaction:")
         println("[1] Register Account Name")
         println("[2] Deposit Amount")
         println("[3] Withdraw Amount")
@@ -128,60 +210,24 @@ fun main() {
 
         } else if (response == 4) {
 
+            currencyExchange()
+
+        } else if (response == 5) {
             showExchangeRate()
 
             if (!backToMainMenu()) {
                 break;
             }
 
-        } else if (response == 5) {
-            println("Foreign Currency Exhcange")
-            println("Source Currency Option:")
-            println("[1] Philippine Peso (PHP)")
-            println("[2] United States Dollar (USD)")
-            println("[3] Japanese Yen (JPY)")
-            println("[4] British Pound Sterling (GBP)")
-            println("[5] Euro (EUR)")
-            println("[6] Chinese Yuan Renminni (CNY)")
-
-            print("Source Currency: ")
-            sourceCurrency = readln().toInt()
-            // not yet finished
-
         } else if (response == 6) {
-            // fix logic
-            println("Show Interest Amount")
-            println("Account Name: $name")
-            println("Current Balance: $balance")
-            println("Currency: PHP")
-            println("Interest Rate: 5%\n")
+            interestAmount(name, balance)
 
-            print("Total Number of Days: ")
-            days = readln().toInt()
-
-            interestBalance = balance
-            println("\nDay   | Interest   | Balance")
-            println("----------------------------")
-            for (day in 1..days) {
-                interestBalance += interest
-
-                println(
-                    "%-5d | %-10.2f | %-10.2f"
-                        .format(day, interest, interestBalance)
-                )
-            }
-
-            answer = readln().uppercase()
-            if (answer == "Y") {
-                continue
-            } else if (answer == "N") {
-                println("Exiting program...")
-                break
+            if (!backToMainMenu()) {
+                break;
             }
 
         } else if (response == 7) {
-            flag = true
+            flag = false
         }
     }
-
 }
