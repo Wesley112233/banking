@@ -71,7 +71,7 @@ fun withdrawAccount(balance: Double): Double {
 }
 
 fun currencyExchange() {
-    var flag = true
+    val flag = true
 
     while (flag) {
 
